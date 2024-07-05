@@ -17,10 +17,12 @@ class Player {
   }
 
   move() {
-    if (this.keys["w"]) this.y -= this.speed;
-    if (this.keys["a"]) this.x -= this.speed;
-    if (this.keys["s"]) this.y += this.speed;
-    if (this.keys["d"]) this.x += this.speed;
+    if (this.keys["w"] && this.y > 0) this.y -= this.speed;
+    if (this.keys["a"] && this.x > 0) this.x -= this.speed;
+    if (this.keys["s"] && this.y < windowHeight - this.size)
+      this.y += this.speed;
+    if (this.keys["d"] && this.x < windowWidth - this.size)
+      this.x += this.speed;
   }
   draw() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
@@ -34,19 +36,15 @@ class Player {
   }
 }
 
-window.onload = () => {
-  const canvas = document.getElementById("myCanvas");
-  const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 
-  const windowWidth = window.innerWidth * 0.7;
-  const windowHeight = window.innerHeight;
+const windowWidth = window.innerWidth * 0.7;
+const windowHeight = window.innerHeight;
 
-  canvas.width = windowWidth;
-  canvas.height = windowHeight;
+canvas.width = windowWidth;
+canvas.height = windowHeight;
 
-  canvas.style.background = "white";
-  const player = new Player(50, 50, 30, 5, ctx);
-  player.loop();
-};
-
-window.addEventListener("keydown", (e) => console.log(e.key));
+canvas.style.background = "white";
+const player = new Player(50, 50, 30, 3, ctx);
+player.loop();
