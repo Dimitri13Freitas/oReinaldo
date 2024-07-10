@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Wave Game</title>
+</head>
+
+<body>
+  <canvas id="myCanvas" height="300" width="300"></canvas>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module">
+    import renderGame from './render.js';
+    import createGame from './game.js'
+
+    const game = createGame();
+    const socket = io();
+
+
+
+
+    socket.on("connect", () => {
+      const playerId = socket.id;
+      renderGame('myCanvas', game, playerId, requestAnimationFrame);
+      // console.log("Usuário conectado, id:" + playerId + " from front");
+    });
+
+
+    socket.on('setup', (state) => {
+      game.setState(state)
+    })
+
+    // socket.on('add-player', (command) => {
+    //   // console.log(`Receiving ${command.type} -> ${command.playerId}`)
+    //   game.addPlayer(command)
+    // })
+
+    // socket.on('remove-player', (command) => {
+    //   // console.log(`Receiving ${command.type} -> ${command.playerId}`)
+    //   game.removePlayer(command)
+    // })
+
+
+
+    // const canvas = document.getElementById('myCanvas');
+    // const ctx = canvas.getContext('2d')
+
+
+    // const windowWidth = window.innerWidth * 0.7;
+    // const windowHeight = window.innerHeight;
+
+    // canvas.width = windowWidth;
+    // canvas.height = windowHeight;
+
+
+    // ctx.fillStyle = "black";
+    // ctx.fillRect(100, 100, 50, 50);
+
+
+
+
+  </script>
+</body>
+
+
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: black;
+  }
+
+  #myCanvas {
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+
+</html>
